@@ -1,0 +1,24 @@
+pluginManagement {
+    plugins {
+        id 'org.springframework.boot' version "${springBootVersion}"
+        id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+        id 'org.asciidoctor.jvm.convert' version "${asciidoctorConvertVersion}"
+        id 'io.spring.javaformat' version "${springJavaFormatVersion}"
+    }
+}
+
+rootProject.name = 'msa-practice'
+
+include 'eureka'
+include 'auth:gateway'
+include 'auth:auth-api'
+include 'core:order-api'
+include 'core:product-api'
+include 'core:core-enum'
+include 'storage:db-auth'
+include 'storage:db-core-order'
+include 'storage:db-core-product'
+include 'tests:api-docs'
+include 'support:logging'
+include 'support:monitoring'
+include 'clients:client-example'
