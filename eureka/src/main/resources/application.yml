@@ -28,6 +28,9 @@ eureka:
 
 ---
 spring.config.activate.on-profile: local
+eureka:
+  server:
+    enable-self-preservation: false
 
 
 ---
