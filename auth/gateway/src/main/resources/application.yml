@@ -19,11 +19,11 @@ spring:
         - id: order-api
           uri: lb://order-api
           predicates:
-            - Path=/order/**
+            - Path=/api/v1/order/**
         - id: product-api
           uri: lb://product-api
           predicates:
-            - Path=/product/**
+            - Path=/api/v1/product/**
       discovery:
         locator:
           enabled: true
