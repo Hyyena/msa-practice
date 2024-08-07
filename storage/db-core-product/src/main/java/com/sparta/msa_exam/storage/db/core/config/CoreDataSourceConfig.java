@@ -2,7 +2,6 @@ package com.sparta.msa_exam.storage.db.core.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
 import java.sql.SQLException;
 import org.h2.tools.Server;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,7 +29,7 @@ class CoreDataSourceConfig {
 	@Profile("local")
 	public HikariDataSource localCoreDataSource(@Qualifier("coreHikariConfig") HikariConfig config)
 			throws SQLException {
-		Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092").start();
+		Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9093").start();
 		return new HikariDataSource(config);
 	}
 
