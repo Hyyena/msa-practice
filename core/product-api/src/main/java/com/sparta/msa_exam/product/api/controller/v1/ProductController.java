@@ -27,7 +27,7 @@ public class ProductController {
 	// TODO: 상품 다건 추가 구현
 	@PostMapping("/api/v1/product")
 	public ApiResponse<ProductResponse> registerProduct(@RequestBody RegisterProductRequest request) {
-		ProductResult result = productService.register(request.toProduct());
+		ProductResult result = productService.register(request.toProduct(), request.toStock());
 		return ApiResponse.success(ProductResponse.of(result));
 	}
 
