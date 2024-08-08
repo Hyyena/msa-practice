@@ -38,10 +38,10 @@ class ProductControllerTest extends RestDocsTest {
 
 	@Test
     public void 상품_추가() {
-        when(productService.register(any())).thenReturn(new ProductResult(1L, "상품1", 1000));
+        when(productService.register(any(), any())).thenReturn(new ProductResult(1L, "상품1", 1000));
 
         given().contentType(ContentType.JSON)
-                .body("{\"name\":\"상품1\",\"supplyPrice\":1000}")
+                .body("{\"name\":\"상품1\",\"supplyPrice\":1000")
                 .post("/api/v1/product")
                 .then()
                 .status(HttpStatus.OK)
