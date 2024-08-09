@@ -2,8 +2,8 @@ package com.sparta.msa_exam.product.api.controller.v1;
 
 import com.sparta.msa_exam.product.api.controller.v1.request.RegisterProductRequest;
 import com.sparta.msa_exam.product.api.controller.v1.response.ProductResponse;
-import com.sparta.msa_exam.product.api.domain.ProductResult;
 import com.sparta.msa_exam.product.api.domain.ProductService;
+import com.sparta.msa_exam.product.api.domain.ProductWithPricePolicyResult;
 import com.sparta.msa_exam.product.api.support.Cursor;
 import com.sparta.msa_exam.product.api.support.response.ApiResponse;
 import com.sparta.msa_exam.product.api.support.response.SliceResult;
@@ -27,7 +27,7 @@ public class ProductController {
 	// TODO: 상품 다건 추가 구현
 	@PostMapping("/api/v1/product")
 	public ApiResponse<ProductResponse> registerProduct(@RequestBody RegisterProductRequest request) {
-		ProductResult result = productService.register(request.toProduct(), request.toStock());
+		ProductWithPricePolicyResult result = productService.register(request.toProduct(), request.toStock());
 		return ApiResponse.success(ProductResponse.of(result));
 	}
 
@@ -41,7 +41,7 @@ public class ProductController {
 	public ApiResponse<SliceResult<List<ProductResponse>>> readProducts(@RequestParam(required = false) String cursor,
 			@RequestParam(defaultValue = "10") int limit, @RequestParam(defaultValue = "id") String sortKey,
 			@RequestParam(defaultValue = "ASC") Sort.Direction sort) {
-		List<ProductResult> products = productService.read(new Cursor(cursor, limit, sortKey, sort));
+		List<ProductWithPricePolicyResult> products = productService.read(new Cursor(cursor, limit, sortKey, sort));
 		return ApiResponse.success(SliceResult.of(ProductResponse.of(products), limit));
 	}
 

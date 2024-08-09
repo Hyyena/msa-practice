@@ -15,22 +15,29 @@ public class ProductService {
 
 	private final ProductPriceRegister productPriceRegister;
 
+	private final ProductPriceReader productPriceReader;
+
 	public ProductService(ProductRegister productRegister, ProductReader productReader,
-			ProductPriceRegister productPriceRegister) {
+			ProductPriceRegister productPriceRegister, ProductPriceReader productPriceReader) {
 		this.productRegister = productRegister;
 		this.productReader = productReader;
 		this.productPriceRegister = productPriceRegister;
+		this.productPriceReader = productPriceReader;
 	}
 
-	public ProductResult register(Product product, ProductWithStock productWithStock) {
+	public ProductWithPricePolicyResult register(Product product, ProductWithStock productWithStock) {
 		ProductResult productResult = productRegister.add(product);
 		PricePolicyResult pricePolicyResult = productPriceRegister.add(ProductResult.toPricePolicy(productResult,
 				productWithStock.stock(), StockStatus.IN_STOCK, PriceStatus.ON));
-		return productResult;
+		return ProductWithPricePolicyResult.of(productResult, pricePolicyResult);
 	}
 
-	public List<ProductResult> read(Cursor cursor) {
-		return productReader.read(cursor);
+	public List<ProductWithPricePolicyResult> read(Cursor cursor) {
+		List<ProductResult> products = productReader.read(cursor);
+		List<Long> productIds = products.stream().map(ProductResult::id).toList();
+		List<PricePolicyResult> pricePolicies = productPriceReader.read(productIds);
+
+		return ProductWithPricePolicyResult.of(products, pricePolicies);
 	}
 
 }

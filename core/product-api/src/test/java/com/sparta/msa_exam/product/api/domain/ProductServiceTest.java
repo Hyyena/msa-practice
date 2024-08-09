@@ -29,12 +29,15 @@ class ProductServiceTest {
 	@Mock
 	private ProductPriceRegister productPriceRegister;
 
+	@Mock
+	private ProductPriceReader productPriceReader;
+
 	private ProductService productService;
 
 	@BeforeEach
 	void setup() {
 		MockitoAnnotations.openMocks(this);
-		productService = new ProductService(productRegister, productReader, productPriceRegister);
+		productService = new ProductService(productRegister, productReader, productPriceRegister, productPriceReader);
 	}
 
 	@Test
@@ -47,7 +50,7 @@ class ProductServiceTest {
 		when(productPriceRegister.add(pricePolicy)).thenReturn(PricePolicyResult.of(pricePolicy.toEntity()));
 
 		// when
-		ProductResult result = productService.register(product, productWithStock);
+		ProductWithPricePolicyResult result = productService.register(product, productWithStock);
 
 		// then
 		assertThat(result).isNotNull();
@@ -60,12 +63,20 @@ class ProductServiceTest {
 	void 상품_목록을_조회한다() {
 		// given
 		Cursor cursor = new Cursor(null, 10, "id", Sort.Direction.ASC);
-		List<ProductResult> expectedResults = List.of(new ProductResult(1L, "상품1", 1000),
-				new ProductResult(2L, "상품2", 2000));
-		when(productReader.read(any(Cursor.class))).thenReturn(expectedResults);
+		List<ProductResult> products = List.of(new ProductResult(1L, "상품1", 1000), new ProductResult(2L, "상품2", 2000));
+		List<PricePolicyResult> pricePolicies = List.of(
+				new PricePolicyResult(1L, 1L, 1000, 100, StockStatus.IN_STOCK, PriceStatus.ON),
+				new PricePolicyResult(2L, 2L, 2000, 200, StockStatus.IN_STOCK, PriceStatus.ON));
+		List<ProductWithPricePolicyResult> expectedResults = List.of(
+				new ProductWithPricePolicyResult(1L, "상품1", 1000,
+						new PricePolicyResult(1L, 1L, 1000, 100, StockStatus.IN_STOCK, PriceStatus.ON)),
+				new ProductWithPricePolicyResult(2L, "상품2", 2000,
+						new PricePolicyResult(2L, 2L, 2000, 200, StockStatus.IN_STOCK, PriceStatus.ON)));
+		when(productReader.read(any(Cursor.class))).thenReturn(products);
+		when(productPriceReader.read(List.of(1L, 2L))).thenReturn(pricePolicies);
 
 		// when
-		List<ProductResult> results = productService.read(cursor);
+		List<ProductWithPricePolicyResult> results = productService.read(cursor);
 
 		// then
 		assertThat(results).isEqualTo(expectedResults);
