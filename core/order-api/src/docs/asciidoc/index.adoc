@@ -9,30 +9,26 @@
 
 == Introduce
 
-This is the Core API documentation.
+주문 API는 주문을 추가하고 조회하는 기능을 제공합니다.
 
-== Example API
+= 주문 API
 
-=== Example GET API
+== 주문 등록
+
+=== 단일 주문 추가
+
 ==== Curl Request
-include::{snippets}/exampleGet/curl-request.adoc[]
-==== Path Parameters
-include::{snippets}/exampleGet/path-parameters.adoc[]
-==== Query Parameters
-include::{snippets}/exampleGet/query-parameters.adoc[]
-==== Http Response
-include::{snippets}/exampleGet/http-response.adoc[]
-==== Response Fields
-include::{snippets}/exampleGet/response-fields.adoc[]
 
-'''
+include::{snippets}/주문 추가/curl-request.adoc[]
 
-=== Example POST API
-==== Curl Request
-include::{snippets}/examplePost/curl-request.adoc[]
-==== Request Fields
-include::{snippets}/examplePost/request-fields.adoc[]
+==== Http Request
+
+include::{snippets}/주문 추가/http-request.adoc[]
+
 ==== Http Response
-include::{snippets}/examplePost/http-response.adoc[]
+
+include::{snippets}/주문 추가/http-response.adoc[]
+
 ==== Response Fields
-include::{snippets}/examplePost/response-fields.adoc[]
+
+include::{snippets}/주문 추가/response-fields.adoc[]
