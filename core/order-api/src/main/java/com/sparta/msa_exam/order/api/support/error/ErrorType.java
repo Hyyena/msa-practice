@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 public enum ErrorType {
 
 	DEFAULT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCode.E500, "An unexpected error has occurred.",
-			LogLevel.ERROR);
+			LogLevel.ERROR),
+	EMPTY_REQUEST_BODY(HttpStatus.BAD_REQUEST, ErrorCode.E400, "Request body is empty.", LogLevel.WARN),
+	EMPTY_ORDER_PRODUCTS(HttpStatus.BAD_REQUEST, ErrorCode.E400, "주문에는 최소 하나 이상의 상품이 포함되어야 합니다.", LogLevel.WARN);
 
 	private final HttpStatus status;
 
