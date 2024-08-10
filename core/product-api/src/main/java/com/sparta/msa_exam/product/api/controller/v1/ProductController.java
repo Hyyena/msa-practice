@@ -10,6 +10,7 @@ import com.sparta.msa_exam.product.api.support.response.SliceResult;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,10 +32,10 @@ public class ProductController {
         return ApiResponse.success(ProductResponse.of(result));
     }
 
-    // TODO: 상품 단건 조회 구현
-    @GetMapping("/api/v1/product")
-    public ApiResponse<ProductResponse> getProduct() {
-        return null;
+    @GetMapping("/api/v1/product/{productId}")
+    public ApiResponse<ProductResponse> findProduct(@PathVariable long productId) {
+        ProductWithPricePolicyResult result = productService.find(productId);
+        return ApiResponse.success(ProductResponse.of(result));
     }
 
     @GetMapping("/api/v1/products")

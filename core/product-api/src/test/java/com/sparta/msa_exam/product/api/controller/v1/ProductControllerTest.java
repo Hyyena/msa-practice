@@ -84,6 +84,44 @@ class ProductControllerTest extends RestDocsTest {
     }
 
     @Test
+    void 상품_조회() {
+        when(productService.find(1L)).thenReturn(new ProductWithPricePolicyResult(1L, "상품1", 1000,
+                new PricePolicyResult(1L, 1L, 1000, 100, StockStatus.IN_STOCK, PriceStatus.ON)));
+
+        given().contentType(ContentType.JSON)
+                .get("/api/v1/product/1")
+                .then()
+                .status(HttpStatus.OK)
+                .apply(
+                        document(
+                                "상품 조회",
+                                requestPreprocessor(),
+                                responsePreprocessor(),
+                                responseFields(
+                                        fieldWithPath("result").type(JsonFieldType.STRING).description("결과"),
+                                        fieldWithPath("data.productId").type(JsonFieldType.NUMBER).description("상품 ID"),
+                                        fieldWithPath("data.name").type(JsonFieldType.STRING).description("상품명"),
+                                        fieldWithPath("data.supplyPrice").type(JsonFieldType.NUMBER)
+                                                .description("공급가격"),
+                                        fieldWithPath("data.pricePolicy.id").type(JsonFieldType.NUMBER)
+                                                .description("가격 정책 ID"),
+                                        fieldWithPath("data.pricePolicy.productId").type(JsonFieldType.NUMBER)
+                                                .description("상품 ID"),
+                                        fieldWithPath("data.pricePolicy.price").type(JsonFieldType.NUMBER)
+                                                .description("가격"),
+                                        fieldWithPath("data.pricePolicy.totalQuantity").type(JsonFieldType.NUMBER)
+                                                .description("재고"),
+                                        fieldWithPath("data.pricePolicy.stockStatus").type(JsonFieldType.STRING)
+                                                .description("재고 상태"),
+                                        fieldWithPath("data.pricePolicy.priceStatus").type(JsonFieldType.STRING)
+                                                .description("가격 상태"),
+                                        fieldWithPath("error").type(JsonFieldType.NULL).ignored()
+                                )
+                        )
+                );
+    }
+
+    @Test
     public void 상품_목록_조회() {
         List<ProductWithPricePolicyResult> expectedResults = List.of(
                 new ProductWithPricePolicyResult(1L, "상품1", 1000,

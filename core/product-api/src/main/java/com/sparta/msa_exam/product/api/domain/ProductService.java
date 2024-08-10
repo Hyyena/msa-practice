@@ -15,13 +15,17 @@ public class ProductService {
 
     private final ProductPriceRegister productPriceRegister;
 
+    private final ProductFinder pircePolicyFinder;
+
     private final ProductPriceReader productPriceReader;
 
     public ProductService(ProductRegister productRegister, ProductReader productReader,
-            ProductPriceRegister productPriceRegister, ProductPriceReader productPriceReader) {
+            ProductPriceRegister productPriceRegister, ProductFinder productFinder,
+            ProductPriceReader productPriceReader) {
         this.productRegister = productRegister;
         this.productReader = productReader;
         this.productPriceRegister = productPriceRegister;
+        this.pircePolicyFinder = productFinder;
         this.productPriceReader = productPriceReader;
     }
 
@@ -30,6 +34,10 @@ public class ProductService {
         PricePolicyResult pricePolicyResult = productPriceRegister.add(ProductResult.toPricePolicy(productResult,
                 productWithStock.stock(), StockStatus.IN_STOCK, PriceStatus.ON));
         return ProductWithPricePolicyResult.of(productResult, pricePolicyResult);
+    }
+
+    public ProductWithPricePolicyResult find(Long productId) {
+        return pircePolicyFinder.find(productId);
     }
 
     public List<ProductWithPricePolicyResult> read(Cursor cursor) {
