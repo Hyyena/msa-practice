@@ -9,6 +9,8 @@ public interface ProductPriceRepository extends JpaRepository<ProductPriceEntity
         return save(productPriceEntity);
     }
 
+    ProductPriceEntity findByProductId(Long productId);
+
     List<ProductPriceEntity> findByProductIdIn(List<Long> productIds);
 
 }
