@@ -8,6 +8,8 @@ import static org.mockito.Mockito.when;
 import com.sparta.msa_exam.core.enums.product.PriceStatus;
 import com.sparta.msa_exam.core.enums.product.StockStatus;
 import com.sparta.msa_exam.product.api.support.Cursor;
+import com.sparta.msa_exam.storage.db.core.product.ProductEntity;
+import com.sparta.msa_exam.storage.db.core.product.ProductPriceEntity;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -16,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ProductServiceTest {
@@ -30,6 +33,9 @@ class ProductServiceTest {
     private ProductPriceRegister productPriceRegister;
 
     @Mock
+    private ProductFinder productFinder;
+
+    @Mock
     private ProductPriceReader productPriceReader;
 
     private ProductService productService;
@@ -37,7 +43,8 @@ class ProductServiceTest {
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        productService = new ProductService(productRegister, productReader, productPriceRegister, productPriceReader);
+        productService = new ProductService(productRegister, productReader, productPriceRegister, productFinder,
+                productPriceReader);
     }
 
     @Test
@@ -57,6 +64,26 @@ class ProductServiceTest {
         assertThat(result.name()).isEqualTo("상품1");
         verify(productRegister).add(product);
         verify(productPriceRegister).add(any());
+    }
+
+    @Test
+    void 상품을_조회한다() {
+        // given
+        Long productId = 1L;
+        ProductEntity product = new ProductEntity("상품1", 1000);
+        ReflectionTestUtils.setField(product, "id", productId);
+        ProductPriceEntity pricePolicy = new ProductPriceEntity(productId, 1000, 100, StockStatus.IN_STOCK,
+                PriceStatus.ON);
+        when(productFinder.find(productId))
+            .thenReturn(ProductWithPricePolicyResult.of(ProductResult.of(product), PricePolicyResult.of(pricePolicy)));
+
+        // when
+        ProductWithPricePolicyResult result = productService.find(productId);
+
+        // then
+        assertThat(result).isNotNull();
+        assertThat(result.productId()).isEqualTo(productId);
+        verify(productFinder).find(productId);
     }
 
     @Test

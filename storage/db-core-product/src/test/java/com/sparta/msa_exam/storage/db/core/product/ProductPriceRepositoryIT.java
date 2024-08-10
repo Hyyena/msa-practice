@@ -26,4 +26,14 @@ class ProductPriceRepositoryIT extends CoreDbContextTest {
         assertEquals(addedProductPrice.getTotalQuantity(), 100);
     }
 
+    @Test
+    void 상품_아이디로_가격_정책이_조회_되어야_한다() {
+        ProductPriceEntity productPrice = productPriceRepository
+            .add(new ProductPriceEntity(1L, 1000, 100, StockStatus.IN_STOCK, PriceStatus.ON));
+        assertNotNull(productPrice);
+
+        ProductPriceEntity foundProductPrice = productPriceRepository.findByProductId(1L);
+        assertEquals(foundProductPrice.getTotalQuantity(), 100);
+    }
+
 }
