@@ -9,35 +9,35 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductService {
 
-	private final ProductRegister productRegister;
+    private final ProductRegister productRegister;
 
-	private final ProductReader productReader;
+    private final ProductReader productReader;
 
-	private final ProductPriceRegister productPriceRegister;
+    private final ProductPriceRegister productPriceRegister;
 
-	private final ProductPriceReader productPriceReader;
+    private final ProductPriceReader productPriceReader;
 
-	public ProductService(ProductRegister productRegister, ProductReader productReader,
-			ProductPriceRegister productPriceRegister, ProductPriceReader productPriceReader) {
-		this.productRegister = productRegister;
-		this.productReader = productReader;
-		this.productPriceRegister = productPriceRegister;
-		this.productPriceReader = productPriceReader;
-	}
+    public ProductService(ProductRegister productRegister, ProductReader productReader,
+            ProductPriceRegister productPriceRegister, ProductPriceReader productPriceReader) {
+        this.productRegister = productRegister;
+        this.productReader = productReader;
+        this.productPriceRegister = productPriceRegister;
+        this.productPriceReader = productPriceReader;
+    }
 
-	public ProductWithPricePolicyResult register(Product product, ProductWithStock productWithStock) {
-		ProductResult productResult = productRegister.add(product);
-		PricePolicyResult pricePolicyResult = productPriceRegister.add(ProductResult.toPricePolicy(productResult,
-				productWithStock.stock(), StockStatus.IN_STOCK, PriceStatus.ON));
-		return ProductWithPricePolicyResult.of(productResult, pricePolicyResult);
-	}
+    public ProductWithPricePolicyResult register(Product product, ProductWithStock productWithStock) {
+        ProductResult productResult = productRegister.add(product);
+        PricePolicyResult pricePolicyResult = productPriceRegister.add(ProductResult.toPricePolicy(productResult,
+                productWithStock.stock(), StockStatus.IN_STOCK, PriceStatus.ON));
+        return ProductWithPricePolicyResult.of(productResult, pricePolicyResult);
+    }
 
-	public List<ProductWithPricePolicyResult> read(Cursor cursor) {
-		List<ProductResult> products = productReader.read(cursor);
-		List<Long> productIds = products.stream().map(ProductResult::id).toList();
-		List<PricePolicyResult> pricePolicies = productPriceReader.read(productIds);
+    public List<ProductWithPricePolicyResult> read(Cursor cursor) {
+        List<ProductResult> products = productReader.read(cursor);
+        List<Long> productIds = products.stream().map(ProductResult::id).toList();
+        List<PricePolicyResult> pricePolicies = productPriceReader.read(productIds);
 
-		return ProductWithPricePolicyResult.of(products, pricePolicies);
-	}
+        return ProductWithPricePolicyResult.of(products, pricePolicies);
+    }
 
 }

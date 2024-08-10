@@ -17,29 +17,29 @@ import org.mockito.MockitoAnnotations;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class OrderAppenderTest {
 
-	@Mock
-	private OrderRepository orderRepository;
+    @Mock
+    private OrderRepository orderRepository;
 
-	private OrderAppender orderAppender;
+    private OrderAppender orderAppender;
 
-	@BeforeEach
-	void setUp() {
-		MockitoAnnotations.openMocks(this);
-		orderAppender = new OrderAppender(orderRepository);
-	}
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        orderAppender = new OrderAppender(orderRepository);
+    }
 
-	@Test
-	void 주문을_추가한다() {
-		// given
-		Order order = new Order("주문1");
-		when(orderRepository.append(any(OrderEntity.class))).thenReturn(order.toEntity());
+    @Test
+    void 주문을_추가한다() {
+        // given
+        Order order = new Order("주문1");
+        when(orderRepository.append(any(OrderEntity.class))).thenReturn(order.toEntity());
 
-		// when
-		OrderResult appendedOrder = orderAppender.append(order);
+        // when
+        OrderResult appendedOrder = orderAppender.append(order);
 
-		// then
-		assertNotNull(appendedOrder);
-		assertThat(appendedOrder.name()).isEqualTo("주문1");
-	}
+        // then
+        assertNotNull(appendedOrder);
+        assertThat(appendedOrder.name()).isEqualTo("주문1");
+    }
 
 }

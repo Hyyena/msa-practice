@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductPriceRepository extends JpaRepository<ProductPriceEntity, Long> {
 
-	default ProductPriceEntity add(ProductPriceEntity productPriceEntity) {
-		return save(productPriceEntity);
-	}
+    default ProductPriceEntity add(ProductPriceEntity productPriceEntity) {
+        return save(productPriceEntity);
+    }
 
-	List<ProductPriceEntity> findByProductIdIn(List<Long> productIds);
+    List<ProductPriceEntity> findByProductIdIn(List<Long> productIds);
 
 }

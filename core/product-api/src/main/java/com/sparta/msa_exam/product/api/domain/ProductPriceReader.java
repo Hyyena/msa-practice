@@ -7,14 +7,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductPriceReader {
 
-	private final ProductPriceRepository productPriceRepository;
+    private final ProductPriceRepository productPriceRepository;
 
-	public ProductPriceReader(ProductPriceRepository productPriceRepository) {
-		this.productPriceRepository = productPriceRepository;
-	}
+    public ProductPriceReader(ProductPriceRepository productPriceRepository) {
+        this.productPriceRepository = productPriceRepository;
+    }
 
-	public List<PricePolicyResult> read(List<Long> productIds) {
-		return PricePolicyResult.of(productPriceRepository.findByProductIdIn(productIds));
-	}
+    public List<PricePolicyResult> read(List<Long> productIds) {
+        return PricePolicyResult.of(productPriceRepository.findByProductIdIn(productIds));
+    }
 
 }

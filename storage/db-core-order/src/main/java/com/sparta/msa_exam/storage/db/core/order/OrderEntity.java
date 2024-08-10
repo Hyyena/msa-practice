@@ -9,18 +9,18 @@ import jakarta.persistence.Table;
 @Table(name = "orders")
 public class OrderEntity extends BaseEntity {
 
-	@Column
-	private String name;
+    @Column
+    private String name;
 
-	public OrderEntity() {
-	}
+    public OrderEntity() {
+    }
 
-	public OrderEntity(String name) {
-		this.name = name;
-	}
+    public OrderEntity(String name) {
+        this.name = name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
 }

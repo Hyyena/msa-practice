@@ -13,18 +13,18 @@ import reactor.core.publisher.Mono;
 @Component
 public class CustomPreFilter implements GlobalFilter, Ordered {
 
-	private final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Override
-	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		ServerHttpRequest request = exchange.getRequest();
-		log.info("Request uri : {}", request.getURI());
-		return chain.filter(exchange);
-	}
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        ServerHttpRequest request = exchange.getRequest();
+        log.info("Request uri : {}", request.getURI());
+        return chain.filter(exchange);
+    }
 
-	@Override
-	public int getOrder() {
-		return Ordered.HIGHEST_PRECEDENCE;
-	}
+    @Override
+    public int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE;
+    }
 
 }

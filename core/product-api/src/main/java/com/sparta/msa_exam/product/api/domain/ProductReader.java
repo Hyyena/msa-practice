@@ -11,21 +11,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductReader {
 
-	private final ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-	public ProductReader(ProductRepository productRepository) {
-		this.productRepository = productRepository;
-	}
+    public ProductReader(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
-	public List<ProductResult> read(Cursor cursor) {
-		Pageable pageable = PageRequest.of(0, cursor.limit() + 1, Sort.by(cursor.sort(), cursor.sortKey()));
-		if (cursor.cursor() != null) {
-			return ProductResult.of(productRepository.findByIdGreaterThan(Long.parseLong(cursor.cursor()), pageable));
-		}
-		else {
-			return ProductResult.of(productRepository.findAll(pageable).getContent());
-		}
+    public List<ProductResult> read(Cursor cursor) {
+        Pageable pageable = PageRequest.of(0, cursor.limit() + 1, Sort.by(cursor.sort(), cursor.sortKey()));
+        if (cursor.cursor() != null) {
+            return ProductResult.of(productRepository.findByIdGreaterThan(Long.parseLong(cursor.cursor()), pageable));
+        }
+        else {
+            return ProductResult.of(productRepository.findAll(pageable).getContent());
+        }
 
-	}
+    }
 
 }

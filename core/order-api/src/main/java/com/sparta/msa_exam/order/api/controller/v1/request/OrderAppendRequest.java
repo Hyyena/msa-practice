@@ -5,7 +5,7 @@ import com.sparta.msa_exam.order.api.domain.OrderProduct;
 import java.util.List;
 
 public record OrderAppendRequest(String name, List<OrderProduct> orderProducts) {
-	public Order toOrder() {
-		return new Order(name);
-	}
+    public Order toOrder() {
+        return new Order(name);
+    }
 }

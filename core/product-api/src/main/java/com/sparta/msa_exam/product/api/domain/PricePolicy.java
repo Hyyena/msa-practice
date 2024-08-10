@@ -5,9 +5,9 @@ import com.sparta.msa_exam.core.enums.product.StockStatus;
 import com.sparta.msa_exam.storage.db.core.product.ProductPriceEntity;
 
 public record PricePolicy(Long productId, int price, int totalQuantity, StockStatus stockStatus,
-		PriceStatus priceStatus) {
+        PriceStatus priceStatus) {
 
-	public ProductPriceEntity toEntity() {
-		return new ProductPriceEntity(productId, price, totalQuantity, stockStatus, priceStatus);
-	}
+    public ProductPriceEntity toEntity() {
+        return new ProductPriceEntity(productId, price, totalQuantity, stockStatus, priceStatus);
+    }
 }

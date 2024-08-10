@@ -13,61 +13,61 @@ import jakarta.persistence.Table;
 @Table(name = "product_price")
 public class ProductPriceEntity extends BaseEntity {
 
-	@Column(nullable = false)
-	private Long productId;
+    @Column(nullable = false)
+    private Long productId;
 
-	@Column(nullable = false)
-	private int price;
+    @Column(nullable = false)
+    private int price;
 
-	@Column
-	private int totalQuantity;
+    @Column
+    private int totalQuantity;
 
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private StockStatus stockStatus;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private StockStatus stockStatus;
 
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private PriceStatus priceStatus;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PriceStatus priceStatus;
 
-	public ProductPriceEntity() {
-	}
+    public ProductPriceEntity() {
+    }
 
-	public ProductPriceEntity(Long productId, int price, int totalQuantity, StockStatus stockStatus,
-			PriceStatus priceStatus) {
-		this.productId = productId;
-		this.price = price;
-		this.totalQuantity = totalQuantity;
-		this.stockStatus = stockStatus;
-		this.priceStatus = priceStatus;
-	}
+    public ProductPriceEntity(Long productId, int price, int totalQuantity, StockStatus stockStatus,
+            PriceStatus priceStatus) {
+        this.productId = productId;
+        this.price = price;
+        this.totalQuantity = totalQuantity;
+        this.stockStatus = stockStatus;
+        this.priceStatus = priceStatus;
+    }
 
-	public Long getProductId() {
-		return productId;
-	}
+    public Long getProductId() {
+        return productId;
+    }
 
-	public int getPrice() {
-		return price;
-	}
+    public int getPrice() {
+        return price;
+    }
 
-	public int getTotalQuantity() {
-		return totalQuantity;
-	}
+    public int getTotalQuantity() {
+        return totalQuantity;
+    }
 
-	public StockStatus getStockStatus() {
-		return stockStatus;
-	}
+    public StockStatus getStockStatus() {
+        return stockStatus;
+    }
 
-	public String getStockStatusDescription() {
-		return stockStatus.getDescription();
-	}
+    public String getStockStatusDescription() {
+        return stockStatus.getDescription();
+    }
 
-	public PriceStatus getPriceStatus() {
-		return priceStatus;
-	}
+    public PriceStatus getPriceStatus() {
+        return priceStatus;
+    }
 
-	public String getPriceStatusDescription() {
-		return priceStatus.getDescription();
-	}
+    public String getPriceStatusDescription() {
+        return priceStatus.getDescription();
+    }
 
 }

@@ -18,31 +18,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProductController {
 
-	private final ProductService productService;
+    private final ProductService productService;
 
-	public ProductController(ProductService productService) {
-		this.productService = productService;
-	}
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
-	// TODO: 상품 다건 추가 구현
-	@PostMapping("/api/v1/product")
-	public ApiResponse<ProductResponse> registerProduct(@RequestBody RegisterProductRequest request) {
-		ProductWithPricePolicyResult result = productService.register(request.toProduct(), request.toStock());
-		return ApiResponse.success(ProductResponse.of(result));
-	}
+    // TODO: 상품 다건 추가 구현
+    @PostMapping("/api/v1/product")
+    public ApiResponse<ProductResponse> registerProduct(@RequestBody RegisterProductRequest request) {
+        ProductWithPricePolicyResult result = productService.register(request.toProduct(), request.toStock());
+        return ApiResponse.success(ProductResponse.of(result));
+    }
 
-	// TODO: 상품 단건 조회 구현
-	@GetMapping("/api/v1/product")
-	public ApiResponse<ProductResponse> getProduct() {
-		return null;
-	}
+    // TODO: 상품 단건 조회 구현
+    @GetMapping("/api/v1/product")
+    public ApiResponse<ProductResponse> getProduct() {
+        return null;
+    }
 
-	@GetMapping("/api/v1/products")
-	public ApiResponse<SliceResult<List<ProductResponse>>> readProducts(@RequestParam(required = false) String cursor,
-			@RequestParam(defaultValue = "10") int limit, @RequestParam(defaultValue = "id") String sortKey,
-			@RequestParam(defaultValue = "ASC") Sort.Direction sort) {
-		List<ProductWithPricePolicyResult> products = productService.read(new Cursor(cursor, limit, sortKey, sort));
-		return ApiResponse.success(SliceResult.of(ProductResponse.of(products), limit));
-	}
+    @GetMapping("/api/v1/products")
+    public ApiResponse<SliceResult<List<ProductResponse>>> readProducts(@RequestParam(required = false) String cursor,
+            @RequestParam(defaultValue = "10") int limit, @RequestParam(defaultValue = "id") String sortKey,
+            @RequestParam(defaultValue = "ASC") Sort.Direction sort) {
+        List<ProductWithPricePolicyResult> products = productService.read(new Cursor(cursor, limit, sortKey, sort));
+        return ApiResponse.success(SliceResult.of(ProductResponse.of(products), limit));
+    }
 
 }

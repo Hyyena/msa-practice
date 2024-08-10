@@ -28,18 +28,18 @@ import org.springframework.restdocs.payload.JsonFieldType;
 
 class ProductControllerTest extends RestDocsTest {
 
-	private ProductService productService;
+    private ProductService productService;
 
-	private ProductController productController;
+    private ProductController productController;
 
-	@BeforeEach
-	public void setUp() {
-		productService = mock(ProductService.class);
-		productController = new ProductController(productService);
-		mockMvc = mockController(productController);
-	}
+    @BeforeEach
+    public void setUp() {
+        productService = mock(ProductService.class);
+        productController = new ProductController(productService);
+        mockMvc = mockController(productController);
+    }
 
-	@Test
+    @Test
     public void 상품_추가() {
         when(productService.register(any(), any())).thenReturn(new ProductWithPricePolicyResult(1L, "상품1", 1000,
                 new PricePolicyResult(1L, 1L, 1000, 100, StockStatus.IN_STOCK, PriceStatus.ON)));
@@ -83,47 +83,47 @@ class ProductControllerTest extends RestDocsTest {
                 );
     }
 
-	@Test
-	public void 상품_목록_조회() {
-		List<ProductWithPricePolicyResult> expectedResults = List.of(
-				new ProductWithPricePolicyResult(1L, "상품1", 1000,
-						new PricePolicyResult(1L, 1L, 1000, 100, StockStatus.IN_STOCK, PriceStatus.ON)),
-				new ProductWithPricePolicyResult(2L, "상품2", 2000,
-						new PricePolicyResult(2L, 2L, 2000, 200, StockStatus.IN_STOCK, PriceStatus.ON)));
-		when(productService.read(any(Cursor.class))).thenReturn(expectedResults);
+    @Test
+    public void 상품_목록_조회() {
+        List<ProductWithPricePolicyResult> expectedResults = List.of(
+                new ProductWithPricePolicyResult(1L, "상품1", 1000,
+                        new PricePolicyResult(1L, 1L, 1000, 100, StockStatus.IN_STOCK, PriceStatus.ON)),
+                new ProductWithPricePolicyResult(2L, "상품2", 2000,
+                        new PricePolicyResult(2L, 2L, 2000, 200, StockStatus.IN_STOCK, PriceStatus.ON)));
+        when(productService.read(any(Cursor.class))).thenReturn(expectedResults);
 
-		given().contentType(ContentType.JSON)
-			.queryParam("cursor", "0")
-			.queryParam("limit", "10")
-			.queryParam("sortKey", "id")
-			.queryParam("sort", "ASC")
-			.get("/api/v1/products")
-			.then()
-			.status(HttpStatus.OK)
-			.apply(document("상품 목록 조회", requestPreprocessor(), responsePreprocessor(),
-					queryParameters(parameterWithName("cursor").description("커서 ID").optional(),
-							parameterWithName("limit").description("페이지 크기"),
-							parameterWithName("sortKey").description("정렬 키"),
-							parameterWithName("sort").description("정렬 방향")),
-					responseFields(fieldWithPath("result").type(JsonFieldType.STRING).description("결과"),
-							fieldWithPath("data.result").type(JsonFieldType.ARRAY).description("상품 목록"),
-							fieldWithPath("data.result[].productId").type(JsonFieldType.NUMBER).description("상품 ID"),
-							fieldWithPath("data.result[].name").type(JsonFieldType.STRING).description("상품명"),
-							fieldWithPath("data.result[].supplyPrice").type(JsonFieldType.NUMBER).description("공급가격"),
-							fieldWithPath("data.result[].pricePolicy.id").type(JsonFieldType.NUMBER)
-								.description("가격 정책 ID"),
-							fieldWithPath("data.result[].pricePolicy.productId").type(JsonFieldType.NUMBER)
-								.description("상품 ID"),
-							fieldWithPath("data.result[].pricePolicy.price").type(JsonFieldType.NUMBER)
-								.description("가격"),
-							fieldWithPath("data.result[].pricePolicy.totalQuantity").type(JsonFieldType.NUMBER)
-								.description("재고"),
-							fieldWithPath("data.result[].pricePolicy.stockStatus").type(JsonFieldType.STRING)
-								.description("재고 상태"),
-							fieldWithPath("data.result[].pricePolicy.priceStatus").type(JsonFieldType.STRING)
-								.description("가격 상태"),
-							fieldWithPath("data.hasNext").type(JsonFieldType.BOOLEAN).description("다음 페이지 존재 여부"),
-							fieldWithPath("error").type(JsonFieldType.NULL).ignored())));
-	}
+        given().contentType(ContentType.JSON)
+            .queryParam("cursor", "0")
+            .queryParam("limit", "10")
+            .queryParam("sortKey", "id")
+            .queryParam("sort", "ASC")
+            .get("/api/v1/products")
+            .then()
+            .status(HttpStatus.OK)
+            .apply(document("상품 목록 조회", requestPreprocessor(), responsePreprocessor(),
+                    queryParameters(parameterWithName("cursor").description("커서 ID").optional(),
+                            parameterWithName("limit").description("페이지 크기"),
+                            parameterWithName("sortKey").description("정렬 키"),
+                            parameterWithName("sort").description("정렬 방향")),
+                    responseFields(fieldWithPath("result").type(JsonFieldType.STRING).description("결과"),
+                            fieldWithPath("data.result").type(JsonFieldType.ARRAY).description("상품 목록"),
+                            fieldWithPath("data.result[].productId").type(JsonFieldType.NUMBER).description("상품 ID"),
+                            fieldWithPath("data.result[].name").type(JsonFieldType.STRING).description("상품명"),
+                            fieldWithPath("data.result[].supplyPrice").type(JsonFieldType.NUMBER).description("공급가격"),
+                            fieldWithPath("data.result[].pricePolicy.id").type(JsonFieldType.NUMBER)
+                                .description("가격 정책 ID"),
+                            fieldWithPath("data.result[].pricePolicy.productId").type(JsonFieldType.NUMBER)
+                                .description("상품 ID"),
+                            fieldWithPath("data.result[].pricePolicy.price").type(JsonFieldType.NUMBER)
+                                .description("가격"),
+                            fieldWithPath("data.result[].pricePolicy.totalQuantity").type(JsonFieldType.NUMBER)
+                                .description("재고"),
+                            fieldWithPath("data.result[].pricePolicy.stockStatus").type(JsonFieldType.STRING)
+                                .description("재고 상태"),
+                            fieldWithPath("data.result[].pricePolicy.priceStatus").type(JsonFieldType.STRING)
+                                .description("가격 상태"),
+                            fieldWithPath("data.hasNext").type(JsonFieldType.BOOLEAN).description("다음 페이지 존재 여부"),
+                            fieldWithPath("error").type(JsonFieldType.NULL).ignored())));
+    }
 
 }

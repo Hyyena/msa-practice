@@ -6,14 +6,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderAppender {
 
-	private final OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-	public OrderAppender(OrderRepository orderRepository) {
-		this.orderRepository = orderRepository;
-	}
+    public OrderAppender(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
-	public OrderResult append(Order order) {
-		return OrderResult.of(orderRepository.append(order.toEntity()));
-	}
+    public OrderResult append(Order order) {
+        return OrderResult.of(orderRepository.append(order.toEntity()));
+    }
 
 }

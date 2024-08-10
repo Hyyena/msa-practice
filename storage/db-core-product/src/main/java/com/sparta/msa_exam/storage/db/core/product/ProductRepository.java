@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
-	default ProductEntity add(ProductEntity productEntity) {
-		return save(productEntity);
-	}
+    default ProductEntity add(ProductEntity productEntity) {
+        return save(productEntity);
+    }
 
-	List<ProductEntity> findByIdGreaterThan(Long id, Pageable pageable);
+    List<ProductEntity> findByIdGreaterThan(Long id, Pageable pageable);
 
 }

@@ -21,18 +21,18 @@ import org.springframework.restdocs.payload.JsonFieldType;
 
 class OrderControllerTest extends RestDocsTest {
 
-	private OrderService orderService;
+    private OrderService orderService;
 
-	private OrderController orderController;
+    private OrderController orderController;
 
-	@BeforeEach
-	void setUp() {
-		orderService = mock(OrderService.class);
-		orderController = new OrderController(orderService);
-		mockMvc = mockController(orderController);
-	}
+    @BeforeEach
+    void setUp() {
+        orderService = mock(OrderService.class);
+        orderController = new OrderController(orderService);
+        mockMvc = mockController(orderController);
+    }
 
-	@Test
+    @Test
     void 주문_추가() {
         when(orderService.append(any(), any())).thenReturn(new OrderAppendResponse(1L).orderId());
 

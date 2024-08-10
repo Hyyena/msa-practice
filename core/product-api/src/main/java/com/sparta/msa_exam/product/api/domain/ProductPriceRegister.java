@@ -7,15 +7,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductPriceRegister {
 
-	private final ProductPriceRepository productPriceRepository;
+    private final ProductPriceRepository productPriceRepository;
 
-	public ProductPriceRegister(ProductPriceRepository productPriceRepository) {
-		this.productPriceRepository = productPriceRepository;
-	}
+    public ProductPriceRegister(ProductPriceRepository productPriceRepository) {
+        this.productPriceRepository = productPriceRepository;
+    }
 
-	public PricePolicyResult add(PricePolicy pricePolicy) {
-		ProductPriceEntity addedProductPrice = productPriceRepository.add(pricePolicy.toEntity());
-		return PricePolicyResult.of(addedProductPrice);
-	}
+    public PricePolicyResult add(PricePolicy pricePolicy) {
+        ProductPriceEntity addedProductPrice = productPriceRepository.add(pricePolicy.toEntity());
+        return PricePolicyResult.of(addedProductPrice);
+    }
 
 }

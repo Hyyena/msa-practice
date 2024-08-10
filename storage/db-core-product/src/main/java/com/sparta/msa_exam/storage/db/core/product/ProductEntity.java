@@ -9,26 +9,26 @@ import jakarta.persistence.Table;
 @Table(name = "product")
 public class ProductEntity extends BaseEntity {
 
-	@Column
-	private String name;
+    @Column
+    private String name;
 
-	@Column
-	private int supplyPrice;
+    @Column
+    private int supplyPrice;
 
-	public ProductEntity() {
-	}
+    public ProductEntity() {
+    }
 
-	public ProductEntity(String name, int supplyPrice) {
-		this.name = name;
-		this.supplyPrice = supplyPrice;
-	}
+    public ProductEntity(String name, int supplyPrice) {
+        this.name = name;
+        this.supplyPrice = supplyPrice;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getSupplyPrice() {
-		return supplyPrice;
-	}
+    public int getSupplyPrice() {
+        return supplyPrice;
+    }
 
 }

@@ -9,26 +9,26 @@ import jakarta.persistence.Table;
 @Table(name = "order_product")
 public class OrderProductEntity extends BaseEntity {
 
-	@Column
-	private Long orderId;
+    @Column
+    private Long orderId;
 
-	@Column
-	private Long productId;
+    @Column
+    private Long productId;
 
-	public OrderProductEntity() {
-	}
+    public OrderProductEntity() {
+    }
 
-	public OrderProductEntity(Long orderId, Long productId) {
-		this.orderId = orderId;
-		this.productId = productId;
-	}
+    public OrderProductEntity(Long orderId, Long productId) {
+        this.orderId = orderId;
+        this.productId = productId;
+    }
 
-	public Long getOrderId() {
-		return orderId;
-	}
+    public Long getOrderId() {
+        return orderId;
+    }
 
-	public Long getProductId() {
-		return productId;
-	}
+    public Long getProductId() {
+        return productId;
+    }
 
 }

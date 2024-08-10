@@ -4,8 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrderProductRepository extends JpaRepository<OrderProductEntity, Long> {
 
-	default OrderProductEntity append(OrderProductEntity orderProductEntity) {
-		return save(orderProductEntity);
-	}
+    default OrderProductEntity append(OrderProductEntity orderProductEntity) {
+        return save(orderProductEntity);
+    }
 
 }

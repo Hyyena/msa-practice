@@ -8,18 +8,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderProductAppender {
 
-	private final OrderProductRepository orderProductRepository;
+    private final OrderProductRepository orderProductRepository;
 
-	public OrderProductAppender(OrderProductRepository orderProductRepository) {
-		this.orderProductRepository = orderProductRepository;
-	}
+    public OrderProductAppender(OrderProductRepository orderProductRepository) {
+        this.orderProductRepository = orderProductRepository;
+    }
 
-	public List<OrderProductResult> append(Long orderId, List<OrderProduct> orderProducts) {
-		List<OrderProductEntity> orderProductEntities = orderProducts.stream()
-			.map(orderProduct -> new OrderProductEntity(orderId, orderProduct.productId()))
-			.toList();
-		List<OrderProductEntity> appendedOrderProduct = orderProductRepository.saveAll(orderProductEntities);
-		return appendedOrderProduct.stream().map(OrderProductResult::of).toList();
-	}
+    public List<OrderProductResult> append(Long orderId, List<OrderProduct> orderProducts) {
+        List<OrderProductEntity> orderProductEntities = orderProducts.stream()
+            .map(orderProduct -> new OrderProductEntity(orderId, orderProduct.productId()))
+            .toList();
+        List<OrderProductEntity> appendedOrderProduct = orderProductRepository.saveAll(orderProductEntities);
+        return appendedOrderProduct.stream().map(OrderProductResult::of).toList();
+    }
 
 }

@@ -13,19 +13,19 @@ import reactor.core.publisher.Mono;
 @Component
 public class CustomPostFilter implements GlobalFilter, Ordered {
 
-	private final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Override
-	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-			ServerHttpResponse response = exchange.getResponse();
-			log.info("Response status code : {}", response.getStatusCode());
-		}));
-	}
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        return chain.filter(exchange).then(Mono.fromRunnable(() -> {
+            ServerHttpResponse response = exchange.getResponse();
+            log.info("Response status code : {}", response.getStatusCode());
+        }));
+    }
 
-	@Override
-	public int getOrder() {
-		return Ordered.LOWEST_PRECEDENCE;
-	}
+    @Override
+    public int getOrder() {
+        return Ordered.LOWEST_PRECEDENCE;
+    }
 
 }
