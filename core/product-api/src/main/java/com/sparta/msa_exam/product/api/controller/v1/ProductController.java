@@ -40,9 +40,8 @@ public class ProductController {
 
     @GetMapping("/api/v1/products")
     public ApiResponse<SliceResult<List<ProductResponse>>> readProducts(@RequestParam(required = false) String cursor,
-                                                                        @RequestParam(defaultValue = "10") int limit,
-                                                                        @RequestParam(defaultValue = "id") String sortKey,
-                                                                        @RequestParam(defaultValue = "ASC") Sort.Direction sort) {
+            @RequestParam(defaultValue = "10") int limit, @RequestParam(defaultValue = "id") String sortKey,
+            @RequestParam(defaultValue = "ASC") Sort.Direction sort) {
         List<ProductWithPricePolicyResult> products = productService.read(new Cursor(cursor, limit, sortKey, sort));
         return ApiResponse.success(SliceResult.of(ProductResponse.of(products), limit));
     }
